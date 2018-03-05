@@ -1,0 +1,36 @@
+version: '2'
+
+services:
+
+   traefik:
+       image: traefik
+       restart: unless-stopped
+       command: -c /dev/null --web --docker --logLevel=INFO --defaultEntryPoints='https' --entryPoints="Name:https Address::443 TLS:/certs/cert.pem,/certs/key.pem" --entryPoints="Name:http Address::80 Redirect.EntryPoint:https"
+       networks:
+           - mailhog
+           - portainer
+           - project1
+           - project2
+       ports:
+           - '80:80'
+           - '443:443'
+           - '8080:8080'
+           - '9000:9000'
+       volumes:
+           - '/var/run/docker.sock:/var/run/docker.sock'
+           # - './traefik/test:/certs'
+           - ./certs:/certs/     # per cbeier at https://github.com/wodby/docker4drupal/issues/50
+
+networks:
+   mailhog:
+       external:
+           name: mailhog_default
+   portainer:
+       external:
+           name: portainer_default
+   project1:
+       external:
+           name: site1_default
+   project2:
+       external:
+           name: site2_default

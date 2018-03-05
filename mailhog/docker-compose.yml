@@ -1,0 +1,10 @@
+version: "2"
+
+services:
+
+  mailhog:
+    image: mailhog/mailhog
+    labels:
+      - 'traefik.backend=mailhog_1'
+      - 'traefik.port=8025'
+      - 'traefik.frontend.rule=Host:mailhog.${DOMAIN}'
