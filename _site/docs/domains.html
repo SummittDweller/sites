@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.4.0 -->
+<title>Domains Configuration | sites</title>
+<meta name="generator" content="Jekyll v3.6.2" />
+<meta property="og:title" content="Domains Configuration" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Dockerized development copy of my Drupal web sites" />
+<meta property="og:description" content="Dockerized development copy of my Drupal web sites" />
+<link rel="canonical" href="http://0.0.0.0:4000/docs/domains.html" />
+<meta property="og:url" content="http://0.0.0.0:4000/docs/domains.html" />
+<meta property="og:site_name" content="sites" />
+<script type="application/ld+json">
+{"url":"http://0.0.0.0:4000/docs/domains.html","description":"Dockerized development copy of my Drupal web sites","@type":"WebPage","headline":"Domains Configuration","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link href="/assets/css/style.css?v=fa1482e904e6aee91d583438d0d275ae35b31f85" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+        <h1><a href="http://0.0.0.0:4000/">sites</a></h1>
+      
+
+      <h1 id="domains-configuration">Domains Configuration</h1>
+
+<p>Docker4Drupal uses <a href="https://hub.docker.com/_/traefik/">traefik</a> container for routing. By default, we use port <code class="highlighter-rouge">8000</code> to avoid potential conflicts but if port <code class="highlighter-rouge">80</code> is free on your host machine just replace traefik’s ports definition in the compose file.</p>
+
+<p>Add <code class="highlighter-rouge">127.0.0.1 drupal.docker.localhost</code> to your <code class="highlighter-rouge">/etc/hosts</code> file (some browsers like Chrome may work without it). Do the same for other default domains you might need from listed below:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Service</th>
+      <th>Domain</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>nginx/apache</td>
+      <td><a href="http://drupal.docker.localhost:8000">http://drupal.docker.localhost:8000</a></td>
+    </tr>
+    <tr>
+      <td>pma</td>
+      <td><a href="http://pma.drupal.docker.localhost:8000">http://pma.drupal.docker.localhost:8000</a></td>
+    </tr>
+    <tr>
+      <td>adminer</td>
+      <td><a href="http://adminer.drupal.docker.localhost:8000">http://adminer.drupal.docker.localhost:8000</a></td>
+    </tr>
+    <tr>
+      <td>mailhog</td>
+      <td><a href="http://mailhog.drupal.docker.localhost:8000">http://mailhog.drupal.docker.localhost:8000</a></td>
+    </tr>
+    <tr>
+      <td>solr</td>
+      <td><a href="http://solr.drupal.docker.localhost:8000">http://solr.drupal.docker.localhost:8000</a></td>
+    </tr>
+    <tr>
+      <td>nodejs</td>
+      <td><a href="http://nodejs.drupal.docker.localhost:8000">http://nodejs.drupal.docker.localhost:8000</a></td>
+    </tr>
+    <tr>
+      <td>node</td>
+      <td><a href="http://front.drupal.docker.localhost:8000">http://front.drupal.docker.localhost:8000</a></td>
+    </tr>
+    <tr>
+      <td>varnish</td>
+      <td><a href="http://varnish.drupal.docker.localhost:8000">http://varnish.drupal.docker.localhost:8000</a></td>
+    </tr>
+    <tr>
+      <td>portainer</td>
+      <td><a href="http://portainer.drupal.docker.localhost:8000">http://portainer.drupal.docker.localhost:8000</a></td>
+    </tr>
+    <tr>
+      <td>webgrind</td>
+      <td><a href="http://webgrind.drupal.docker.localhost:8000">http://webgrind.drupal.docker.localhost:8000</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>You can modify domains under labels definition, e.g. <code class="highlighter-rouge">traefik.frontend.rule=Host:mailhog.drupal.docker.localhost</code>.</p>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="http://github.com/SummittDweller/sites/edit/gh-pages/docs/domains.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="/assets/javascript/anchor-js/anchor.min.js"></script>
+    <script>anchors.add();</script>
+  </body>
+</html>

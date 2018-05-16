@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.4.0 -->
+<title>PHP | sites</title>
+<meta name="generator" content="Jekyll v3.6.2" />
+<meta property="og:title" content="PHP" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Dockerized development copy of my Drupal web sites" />
+<meta property="og:description" content="Dockerized development copy of my Drupal web sites" />
+<link rel="canonical" href="http://0.0.0.0:4000/docs/containers/php.html" />
+<meta property="og:url" content="http://0.0.0.0:4000/docs/containers/php.html" />
+<meta property="og:site_name" content="sites" />
+<script type="application/ld+json">
+{"url":"http://0.0.0.0:4000/docs/containers/php.html","description":"Dockerized development copy of my Drupal web sites","@type":"WebPage","headline":"PHP","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link href="/assets/css/style.css?v=fa1482e904e6aee91d583438d0d275ae35b31f85" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+        <h1><a href="http://0.0.0.0:4000/">sites</a></h1>
+      
+
+      <h1 id="php">PHP</h1>
+
+<p>PHP is used with Nginx via PHP-FPM.</p>
+
+<h2 id="drush">Drush</h2>
+
+<p>PHP container has installed drush. When running drush make sure to open the shell as user 82 (www-data) to avoid access problems in the web server, which is running as user 82, too:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker-compose <span class="nb">exec </span>php drush
+</code></pre></div></div>
+
+<p>Also, you can use preconfigured drush alias @dev:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker-compose <span class="nb">exec </span>php drush @dev
+</code></pre></div></div>
+
+<h2 id="composer">Composer</h2>
+
+<p>PHP container has installed composer. Example:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker-compose <span class="nb">exec </span>php composer update
+</code></pre></div></div>
+
+<h2 id="drupal-console">Drupal Console</h2>
+
+<p>PHP container has installed drupal launcher. Drupal console itself must be installed per project manually via composer.</p>
+
+<h2 id="xdebug">Xdebug</h2>
+
+<p>If you want to use Xdebug, uncomment this line to enable it in the compose file before starting containers:</p>
+<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">PHP_XDEBUG</span><span class="pi">:</span> <span class="s">1</span>                 <span class="c1"># Enable Xdebug extension</span>
+<span class="na">PHP_XDEBUG_DEFAULT_ENABLE</span><span class="pi">:</span> <span class="s">1</span>  <span class="c1"># Comment out to disable (default).</span>
+</code></pre></div></div>
+
+<p>If you would like to autostart xdebug, uncomment this line:</p>
+<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">PHP_XDEBUG_REMOTE_AUTOSTART</span><span class="pi">:</span> <span class="s">1</span>     <span class="c1"># Comment out to disable (default).</span>
+</code></pre></div></div>
+
+<h3 id="xdebug-on-mac-os-x">Xdebug on Mac OS X</h3>
+
+<p>There are two more things that need to be done on macOS in order to have Xdebug working (because there’s no docker0 interface). Enable Xdebug as described in the previous section and uncomment the following two lines:</p>
+
+<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">PHP_XDEBUG_REMOTE_CONNECT_BACK</span><span class="pi">:</span> <span class="s">0</span>         <span class="c1"># Disabled for remote.host to work (enabled by default)</span>
+<span class="na">PHP_XDEBUG_REMOTE_HOST</span><span class="pi">:</span> <span class="s2">"</span><span class="s">10.254.254.254"</span>  <span class="c1"># Setting the host (localhost by default)</span>
+</code></pre></div></div>
+
+<p>You also need to have loopback alias with IP from above. You need this only once and that settings stays active until logout or restart.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>ifconfig lo0 <span class="nb">alias </span>10.254.254.254
+</code></pre></div></div>
+<p>To add the loopback alias after a reboot, add the following contents to /Library/LaunchDaemons/docker4drupal.loopback.plist</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;plist</span> <span class="na">version=</span><span class="s">"1.0"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;dict&gt;</span>
+    <span class="nt">&lt;key&gt;</span>Label<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>Default Loopback alias<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>ProgramArguments<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;array&gt;</span>
+      <span class="nt">&lt;string&gt;</span>/sbin/ifconfig<span class="nt">&lt;/string&gt;</span>
+      <span class="nt">&lt;string&gt;</span>lo0<span class="nt">&lt;/string&gt;</span>
+      <span class="nt">&lt;string&gt;</span>alias<span class="nt">&lt;/string&gt;</span>
+      <span class="nt">&lt;string&gt;</span>10.254.254.254<span class="nt">&lt;/string&gt;</span>
+      <span class="nt">&lt;string&gt;</span>netmask<span class="nt">&lt;/string&gt;</span>
+      <span class="nt">&lt;string&gt;</span>255.255.255.0<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;/array&gt;</span>
+    <span class="nt">&lt;key&gt;</span>RunAtLoad<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;true/&gt;</span>
+  <span class="nt">&lt;/dict&gt;</span>
+<span class="nt">&lt;/plist&gt;</span>
+</code></pre></div></div>
+
+<h3 id="xdebug-on-windows">Xdebug on Windows</h3>
+
+<p>You should do same things as for Mac OS. Enable Xdebug as described in the previous 2 sections and replace value of <em>PHP_XDEBUG_REMOTE_HOST</em> to your DockerNAT ip assigned (by default it should be 10.0.75.1):</p>
+
+<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">PHP_XDEBUG_REMOTE_HOST</span><span class="pi">:</span> <span class="s2">"</span><span class="s">10.0.75.1"</span>  <span class="c1"># Setting the host (localhost by default)</span>
+</code></pre></div></div>
+
+<p>You also need to check firewall not to block your connection. Disabling firewall should help.</p>
+
+<h2 id="phpunit">PHPUnit</h2>
+
+<ol>
+  <li>Inside your drupal/core directory, copy the file <code class="highlighter-rouge">phpunit.xml.dist</code> and rename it to <code class="highlighter-rouge">phpunit.xml</code></li>
+  <li>Open that file and make sure that you update <code class="highlighter-rouge">SIMPLETEST_BASE_URL</code> to <code class="highlighter-rouge">http://nginx</code></li>
+  <li>In order to make sure that your DB connection is working as well, update <code class="highlighter-rouge">SIMPLETEST_DB</code> to <code class="highlighter-rouge">mysql://drupal:drupal@mariadb/drupal</code></li>
+</ol>
+
+<h2 id="configuration">Configuration</h2>
+
+<p>Configuration is possible via environment variables. See the full list of variables on <a href="https://github.com/wodby/drupal-php">GitHub</a>.</p>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="http://github.com/SummittDweller/sites/edit/gh-pages/docs/containers/php.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="/assets/javascript/anchor-js/anchor.min.js"></script>
+    <script>anchors.add();</script>
+  </body>
+</html>

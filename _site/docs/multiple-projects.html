@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.4.0 -->
+<title>Running Multiple Projects with Træfik | sites</title>
+<meta name="generator" content="Jekyll v3.6.2" />
+<meta property="og:title" content="Running Multiple Projects with Træfik" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Dockerized development copy of my Drupal web sites" />
+<meta property="og:description" content="Dockerized development copy of my Drupal web sites" />
+<link rel="canonical" href="http://0.0.0.0:4000/docs/multiple-projects.html" />
+<meta property="og:url" content="http://0.0.0.0:4000/docs/multiple-projects.html" />
+<meta property="og:site_name" content="sites" />
+<script type="application/ld+json">
+{"url":"http://0.0.0.0:4000/docs/multiple-projects.html","description":"Dockerized development copy of my Drupal web sites","@type":"WebPage","headline":"Running Multiple Projects with Træfik","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link href="/assets/css/style.css?v=fa1482e904e6aee91d583438d0d275ae35b31f85" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+        <h1><a href="http://0.0.0.0:4000/">sites</a></h1>
+      
+
+      <h1 id="running-multiple-projects-with-træfik">Running Multiple Projects with Træfik</h1>
+
+<p><a href="https://docs.traefik.io/">Træfik</a> is a modern HTTP reverse proxy and load balancer made to deploy microservices with ease.
+To understand the basics of Traefik it is suggested to check Træfik’s documentation page: https://docs.traefik.io/</p>
+
+<p><img src="https://docs.traefik.io/img/internal.png" /></p>
+
+<p>Image: Multi-domain set-up example
+(Source: traefik.io)</p>
+
+<h2 id="steps-to-set-up-two-projects-on-one-host">Steps to set up two projects on one host</h2>
+
+<ol>
+  <li>Create two dirs where you will host two projects. Let’s name them <em>site1</em> and <em>site2</em></li>
+  <li>Copy <code class="highlighter-rouge">docker-compose.yml</code> file to both dirs (<em>site1</em> and <em>site2</em>)</li>
+  <li>Download <code class="highlighter-rouge">traefik.yml</code> file from the <a href="https://github.com/wodby/docker4drupal/releases">latest stable release</a> to the parent dir where <em>site1</em> and <em>site2</em> dirs are</li>
+  <li>Edit <code class="highlighter-rouge">traefik.yml</code> and change <code class="highlighter-rouge">project1-dir_default</code> to <code class="highlighter-rouge">site1_default</code> and <code class="highlighter-rouge">project2-dir_default</code> to <code class="highlighter-rouge">site2_default</code>. Those are docker networks names that are created automatically from the dir name where docker-compose.yml is located</li>
+  <li>Edit site1’s <code class="highlighter-rouge">docker-compose.yml</code> file. There are 3 main things that need to be done there:
+    <ul>
+      <li>In nginx service, under labels, change <code class="highlighter-rouge">traefik.backend=nginx</code> to <code class="highlighter-rouge">traefik.backend=site1_nginx_1</code>. This is the name of the container. You can see that under NAMES when your have the containers running by executing <code class="highlighter-rouge">docker ps</code></li>
+      <li>Change <code class="highlighter-rouge">traefik.frontend.rule</code> from <code class="highlighter-rouge">Host:drupal.docker.localhost</code> to <code class="highlighter-rouge">Host:site1.docker.localhost</code></li>
+      <li>Comment out all lines of <code class="highlighter-rouge">traefik</code> service at the bottom of the file</li>
+    </ul>
+  </li>
+  <li>Make similar 3 changes in site2’s <code class="highlighter-rouge">docker-compose.yml</code> file:
+    <ul>
+      <li><code class="highlighter-rouge">traefik.backend=nginx</code> to <code class="highlighter-rouge">traefik.backend=site2_nginx_1</code></li>
+      <li><code class="highlighter-rouge">Host:drupal.docker.localhost</code> to <code class="highlighter-rouge">Host:site2.docker.localhost</code></li>
+      <li>Comment out all lines of <code class="highlighter-rouge">traefik</code> service at the bottom of the file</li>
+    </ul>
+  </li>
+  <li>Run <code class="highlighter-rouge">docker-compose up -d</code> in <em>site1</em> and <em>site2</em> dirs to spin up containers for both projects</li>
+  <li>Run stand-alone traefik <code class="highlighter-rouge">docker-compose -f traefik.yml up -d</code> to spin up traefik reverse proxy</li>
+  <li>Visit http://site1.docker.localhost and http://site2.docker.localhost in your browser</li>
+</ol>
+
+<p>This set up also works for other Docker projects (non Drupal and non docker4drupal based). You can replace nginx-proxy config with Traefik and get other projects all routed with on traefik container.</p>
+
+<h2 id="problems">Problems?</h2>
+
+<ul>
+  <li>Check <code class="highlighter-rouge">docker ps</code> to see which containers are running and check if you have set up all names correctly.</li>
+  <li>Check <code class="highlighter-rouge">docker network ls</code> to check if the network names are matching.</li>
+  <li>Run <code class="highlighter-rouge">docker-compose logs -f</code> in site1 or site2 to see the log of each project.</li>
+</ul>
+
+<p>To report issues about multi-project set up with docker4drupal or if you have more suggestions and use-cases, please use <a href="https://github.com/wodby/docker4drupal/issues/124">this issue on GitHub</a></p>
+
+<h2 id="additional-for-macos-users-with-docker-sync">Additional for macOS users with docker-sync:</h2>
+
+<p>Names of <code class="highlighter-rouge">syncs</code> in docker-sync.yml file must be unique per project. The recommended way is to run stand-alone docker-sync with syncs definition for all projects. Do not forget to update <code class="highlighter-rouge">src</code> paths for projects.</p>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="http://github.com/SummittDweller/sites/edit/gh-pages/docs/multiple-projects.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="/assets/javascript/anchor-js/anchor.min.js"></script>
+    <script>anchors.add();</script>
+  </body>
+</html>

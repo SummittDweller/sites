@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.4.0 -->
+<title>Redis | sites</title>
+<meta name="generator" content="Jekyll v3.6.2" />
+<meta property="og:title" content="Redis" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Dockerized development copy of my Drupal web sites" />
+<meta property="og:description" content="Dockerized development copy of my Drupal web sites" />
+<link rel="canonical" href="http://0.0.0.0:4000/docs/containers/redis.html" />
+<meta property="og:url" content="http://0.0.0.0:4000/docs/containers/redis.html" />
+<meta property="og:site_name" content="sites" />
+<script type="application/ld+json">
+{"url":"http://0.0.0.0:4000/docs/containers/redis.html","description":"Dockerized development copy of my Drupal web sites","@type":"WebPage","headline":"Redis","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link href="/assets/css/style.css?v=fa1482e904e6aee91d583438d0d275ae35b31f85" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+        <h1><a href="http://0.0.0.0:4000/">sites</a></h1>
+      
+
+      <h1 id="redis">Redis</h1>
+
+<h2 id="integration">Integration</h2>
+
+<p>To spin up a container with Redis cache and use it as a default cache storage follow these steps:</p>
+
+<ol>
+  <li>Uncomment lines with redis service definition in the compose file.</li>
+  <li>Download and install <a href="https://www.drupal.org/project/redis">redis module</a></li>
+  <li>Add the following lines to the settings.php file:</li>
+</ol>
+
+<p>DRUPAL 7:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$contrib_path</span> <span class="o">=</span> <span class="nb">is_dir</span><span class="p">(</span><span class="s1">'sites/all/modules/contrib'</span><span class="p">)</span> <span class="o">?</span> <span class="s1">'sites/all/modules/contrib'</span> <span class="o">:</span> <span class="s1">'sites/all/modules'</span><span class="p">;</span>
+
+<span class="nv">$conf</span><span class="p">[</span><span class="s1">'redis_client_base'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="nv">$conf</span><span class="p">[</span><span class="s1">'redis_client_interface'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'PhpRedis'</span><span class="p">;</span>
+<span class="nv">$conf</span><span class="p">[</span><span class="s1">'lock_inc'</span><span class="p">]</span> <span class="o">=</span> <span class="nv">$contrib_path</span> <span class="o">.</span> <span class="s1">'/redis/redis.lock.inc'</span><span class="p">;</span>
+<span class="nv">$conf</span><span class="p">[</span><span class="s1">'path_inc'</span><span class="p">]</span> <span class="o">=</span> <span class="nv">$contrib_path</span> <span class="o">.</span> <span class="s1">'/redis/redis.path.inc'</span><span class="p">;</span>
+<span class="nv">$conf</span><span class="p">[</span><span class="s1">'cache_backends'</span><span class="p">][]</span> <span class="o">=</span> <span class="nv">$contrib_path</span> <span class="o">.</span> <span class="s1">'/redis/redis.autoload.inc'</span><span class="p">;</span>
+<span class="nv">$conf</span><span class="p">[</span><span class="s1">'cache_default_class'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'Redis_Cache'</span><span class="p">;</span>
+<span class="nv">$conf</span><span class="p">[</span><span class="s1">'cache_class_cache_form'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'DrupalDatabaseCache'</span><span class="p">;</span>
+<span class="nv">$conf</span><span class="p">[</span><span class="s1">'redis_client_host'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'redis'</span><span class="p">;</span>
+<span class="nv">$conf</span><span class="p">[</span><span class="s1">'redis_client_port'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'6379'</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>DRUPAL 8:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$contrib_path</span> <span class="o">=</span> <span class="nb">is_dir</span><span class="p">(</span><span class="s1">'modules/contrib'</span><span class="p">)</span> <span class="o">?</span> <span class="s1">'modules/contrib'</span> <span class="o">:</span> <span class="s1">'modules'</span><span class="p">;</span>
+
+<span class="nv">$settings</span><span class="p">[</span><span class="s1">'redis.connection'</span><span class="p">][</span><span class="s1">'host'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'redis'</span><span class="p">;</span>
+<span class="nv">$settings</span><span class="p">[</span><span class="s1">'redis.connection'</span><span class="p">][</span><span class="s1">'port'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'6379'</span><span class="p">;</span>
+<span class="nv">$settings</span><span class="p">[</span><span class="s1">'redis.connection'</span><span class="p">][</span><span class="s1">'password'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">''</span><span class="p">;</span>
+<span class="nv">$settings</span><span class="p">[</span><span class="s1">'redis.connection'</span><span class="p">][</span><span class="s1">'base'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="nv">$settings</span><span class="p">[</span><span class="s1">'redis.connection'</span><span class="p">][</span><span class="s1">'interface'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'PhpRedis'</span><span class="p">;</span>
+<span class="nv">$settings</span><span class="p">[</span><span class="s1">'cache'</span><span class="p">][</span><span class="s1">'default'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'cache.backend.redis'</span><span class="p">;</span>
+<span class="nv">$settings</span><span class="p">[</span><span class="s1">'cache'</span><span class="p">][</span><span class="s1">'bins'</span><span class="p">][</span><span class="s1">'bootstrap'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'cache.backend.chainedfast'</span><span class="p">;</span>
+<span class="nv">$settings</span><span class="p">[</span><span class="s1">'cache'</span><span class="p">][</span><span class="s1">'bins'</span><span class="p">][</span><span class="s1">'discovery'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'cache.backend.chainedfast'</span><span class="p">;</span>
+<span class="nv">$settings</span><span class="p">[</span><span class="s1">'cache'</span><span class="p">][</span><span class="s1">'bins'</span><span class="p">][</span><span class="s1">'config'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'cache.backend.chainedfast'</span><span class="p">;</span>
+
+<span class="nv">$settings</span><span class="p">[</span><span class="s1">'container_yamls'</span><span class="p">][]</span> <span class="o">=</span> <span class="nv">$contrib_path</span> <span class="o">.</span> <span class="s1">'/redis/example.services.yml'</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="configuration">Configuration</h2>
+
+<p>Configuration is possible via environment variables. See the full list of variables on <a href="https://github.com/wodby/redis">GitHub</a>.</p>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="http://github.com/SummittDweller/sites/edit/gh-pages/docs/containers/redis.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="/assets/javascript/anchor-js/anchor.min.js"></script>
+    <script>anchors.add();</script>
+  </body>
+</html>

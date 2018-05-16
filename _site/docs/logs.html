@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.4.0 -->
+<title>Containers Logs | sites</title>
+<meta name="generator" content="Jekyll v3.6.2" />
+<meta property="og:title" content="Containers Logs" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Dockerized development copy of my Drupal web sites" />
+<meta property="og:description" content="Dockerized development copy of my Drupal web sites" />
+<link rel="canonical" href="http://0.0.0.0:4000/docs/logs.html" />
+<meta property="og:url" content="http://0.0.0.0:4000/docs/logs.html" />
+<meta property="og:site_name" content="sites" />
+<script type="application/ld+json">
+{"url":"http://0.0.0.0:4000/docs/logs.html","description":"Dockerized development copy of my Drupal web sites","@type":"WebPage","headline":"Containers Logs","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link href="/assets/css/style.css?v=fa1482e904e6aee91d583438d0d275ae35b31f85" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+        <h1><a href="http://0.0.0.0:4000/">sites</a></h1>
+      
+
+      <h1 id="containers-logs">Containers Logs</h1>
+
+<h2 id="gui">GUI</h2>
+
+<p>You can find containers logs from portainer UI: <a href="http://portainer.drupal.docker.localhost:8000">http://portainer.drupal.docker.localhost:8000</a></p>
+
+<h2 id="cli">CLI</h2>
+
+<p>To get logs from a container simply run (skip the last param to get logs from all the containers):</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ docker-compose logs [service]
+</code></pre></div></div>
+
+<p>Example: real-time logs of the PHP container:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ docker-compose logs -f php
+</code></pre></div></div>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="http://github.com/SummittDweller/sites/edit/gh-pages/docs/logs.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="/assets/javascript/anchor-js/anchor.min.js"></script>
+    <script>anchors.add();</script>
+  </body>
+</html>

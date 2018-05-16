@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.4.0 -->
+<title>Docker for Mac Performance | sites</title>
+<meta name="generator" content="Jekyll v3.6.2" />
+<meta property="og:title" content="Docker for Mac Performance" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Dockerized development copy of my Drupal web sites" />
+<meta property="og:description" content="Dockerized development copy of my Drupal web sites" />
+<link rel="canonical" href="http://0.0.0.0:4000/docs/macos.html" />
+<meta property="og:url" content="http://0.0.0.0:4000/docs/macos.html" />
+<meta property="og:site_name" content="sites" />
+<script type="application/ld+json">
+{"url":"http://0.0.0.0:4000/docs/macos.html","description":"Dockerized development copy of my Drupal web sites","@type":"WebPage","headline":"Docker for Mac Performance","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link href="/assets/css/style.css?v=fa1482e904e6aee91d583438d0d275ae35b31f85" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+        <h1><a href="http://0.0.0.0:4000/">sites</a></h1>
+      
+
+      <h1 id="docker-for-mac-performance">Docker for Mac Performance</h1>
+
+<p>There 2 ways how can improve <a href="https://github.com/Wodby/docker4drupal/issues/4">performance</a> of docker volumes on macOS:</p>
+
+<h2 id="1-user-guided-caching">1. User-guided Caching</h2>
+
+<p>Since Docker for Mac 17.06 there’s a new <code class="highlighter-rouge">:cached</code> option available for volumes. You can find more information about this in <a href="https://blog.docker.com/2017/05/user-guided-caching-in-docker-for-mac/">docker blog</a>.</p>
+
+<h3 id="usage">Usage</h3>
+
+<p>Replace <em>codebase</em> volume definition of <em>php</em> and <em>nginx</em>/<em>apache</em> services with the option below marked as “User-guided caching”.</p>
+
+<h2 id="2-docker-sync">2. Docker-sync</h2>
+
+<p>The core idea of this project is to use an external volume that will sync your files with a file synchronizer tool.</p>
+
+<h3 id="installation">Installation</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>gem install docker-sync
+</code></pre></div></div>
+
+<h3 id="usage-1">Usage</h3>
+
+<ol>
+  <li>Download <code class="highlighter-rouge">docker-sync.yml</code> file from the <a href="https://github.com/wodby/docker4drupal/releases">latest stable release</a></li>
+  <li>Uncomment <em>docker-sync</em> volume definition in your compose file</li>
+  <li>Replace <em>volumes</em> definition of <em>php</em> and <em>nginx</em>/<em>apache</em> services with the option below marked as “Docker-sync”.</li>
+  <li>Start docker-sync: <code class="highlighter-rouge">docker-sync start</code></li>
+  <li>In a new shell run after you started docker-sync <code class="highlighter-rouge">docker-compose up -d</code></li>
+</ol>
+
+<p>Now when you change your code on the host machine docker-sync will sync your data to php and nginx/apache containers.</p>
+
+<p>For more information visit <a href="https://github.com/EugenMayer/docker-sync/">docker-sync project page</a>.</p>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="http://github.com/SummittDweller/sites/edit/gh-pages/docs/macos.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="/assets/javascript/anchor-js/anchor.min.js"></script>
+    <script>anchors.add();</script>
+  </body>
+</html>

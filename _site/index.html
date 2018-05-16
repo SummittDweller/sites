@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.4.0 -->
+<title>Docker-based Drupal stack | sites</title>
+<meta name="generator" content="Jekyll v3.6.2" />
+<meta property="og:title" content="Docker-based Drupal stack" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Dockerized development copy of my Drupal web sites" />
+<meta property="og:description" content="Dockerized development copy of my Drupal web sites" />
+<link rel="canonical" href="http://0.0.0.0:4000/" />
+<meta property="og:url" content="http://0.0.0.0:4000/" />
+<meta property="og:site_name" content="sites" />
+<script type="application/ld+json">
+{"url":"http://0.0.0.0:4000/","name":"sites","description":"Dockerized development copy of my Drupal web sites","@type":"WebSite","headline":"Docker-based Drupal stack","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link href="/assets/css/style.css?v=fa1482e904e6aee91d583438d0d275ae35b31f85" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+        <h1><a href="http://0.0.0.0:4000/">sites</a></h1>
+      
+
+      <h1 id="docker-based-drupal-stack">Docker-based Drupal stack</h1>
+
+<p><a href="https://travis-ci.org/wodby/docker4drupal"><img src="https://travis-ci.org/wodby/docker4drupal.svg?branch=master" alt="Build Status" /></a>
+<a href="http://slack.wodby.com"><img src="http://slack.wodby.com/badge.svg" alt="Wodby Slack" /></a>
+<a href="https://twitter.com/wodbyhq"><img src="https://img.shields.io/twitter/follow/wodbyhq.svg?style=social&amp;label=Follow" alt="Wodby Twitter" /></a></p>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>Docker4Drupal is a set of docker images optimized for Drupal. Use <code class="highlighter-rouge">docker-compose.yml</code> file from the <a href="https://github.com/wodby/docker4drupal/releases">latest stable release</a> to spin up local environment on Linux, Mac OS X and Windows.</p>
+
+<p>Read <a href="http://wodby.com/stacks/drupal/docs/local/quick-start"><strong>Getting Started</strong></a>.</p>
+
+<h2 id="stack">Stack</h2>
+
+<p>The Drupal stack consist of the following containers:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Container</th>
+      <th>Versions</th>
+      <th>Service name</th>
+      <th>Image</th>
+      <th>Enabled by default</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Nginx</td>
+      <td>1.13, 1.12</td>
+      <td><code class="highlighter-rouge">nginx</code></td>
+      <td><a href="https://github.com/wodby/drupal-nginx">wodby/drupal-nginx</a></td>
+      <td>✓</td>
+    </tr>
+    <tr>
+      <td>Apache</td>
+      <td>2.4</td>
+      <td><code class="highlighter-rouge">apache</code></td>
+      <td><a href="https://github.com/wodby/php-apache">wodby/php-apache</a></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Drupal</td>
+      <td>8, 7, 6</td>
+      <td><code class="highlighter-rouge">php</code></td>
+      <td><a href="https://github.com/wodby/drupal">wodby/drupal</a></td>
+      <td>✓</td>
+    </tr>
+    <tr>
+      <td>PHP</td>
+      <td>7.1, 7.0, 5.6, 5.3</td>
+      <td><code class="highlighter-rouge">php</code></td>
+      <td><a href="https://github.com/wodby/drupal-php">wodby/drupal-php</a></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>MariaDB</td>
+      <td>10.2, 10.1</td>
+      <td><code class="highlighter-rouge">mariadb</code></td>
+      <td><a href="https://github.com/wodby/mariadb">wodby/mariadb</a></td>
+      <td>✓</td>
+    </tr>
+    <tr>
+      <td>PostgreSQL</td>
+      <td>10.1, 9.6</td>
+      <td><code class="highlighter-rouge">postgres</code></td>
+      <td><a href="https://github.com/wodby/postgres">wodby/postgres</a></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Redis</td>
+      <td>4.0, 3.2</td>
+      <td><code class="highlighter-rouge">redis</code></td>
+      <td><a href="https://github.com/wodby/redis">wodby/redis</a></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Varnish</td>
+      <td>4.1</td>
+      <td><code class="highlighter-rouge">varnish</code></td>
+      <td><a href="https://github.com/wodby/drupal-varnish">wodby/drupal-varnish</a></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Solr</td>
+      <td>7.x, 6.x, 5.5, 5.4</td>
+      <td><code class="highlighter-rouge">solr</code></td>
+      <td><a href="https://github.com/wodby/drupal-solr">wodby/drupal-solr</a></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Node.js</td>
+      <td>1.0</td>
+      <td><code class="highlighter-rouge">nodejs</code></td>
+      <td><a href="https://github.com/wodby/drupal-node">wodby/drupal-node</a></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Memcached</td>
+      <td>1.4</td>
+      <td><code class="highlighter-rouge">memcached</code></td>
+      <td><a href="https://github.com/wodby/memcached">wodby/memcached</a></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Webgrind</td>
+      <td>1.5</td>
+      <td><code class="highlighter-rouge">webgrind</code></td>
+      <td><a href="https://hub.docker.com/r/wodby/webgrind">wodby/webgrind</a></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Blackfire</td>
+      <td>latest</td>
+      <td><code class="highlighter-rouge">blackfire</code></td>
+      <td><a href="https://hub.docker.com/r/blackfire/blackfire">blackfire/blackfire</a></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Rsyslog</td>
+      <td>latest</td>
+      <td><code class="highlighter-rouge">rsyslog</code></td>
+      <td><a href="https://hub.docker.com/r/wodby/rsyslog">wodby/rsyslog</a></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>AthenaPDF</td>
+      <td>2.10.0</td>
+      <td><code class="highlighter-rouge">athenapdf</code></td>
+      <td><a href="https://hub.docker.com/r/arachnysdocker/athenapdf-service">arachnysdocker/athenapdf-service</a></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Mailhog</td>
+      <td>latest</td>
+      <td><code class="highlighter-rouge">mailhog</code></td>
+      <td><a href="https://hub.docker.com/r/mailhog/mailhog">mailhog/mailhog</a></td>
+      <td>✓</td>
+    </tr>
+    <tr>
+      <td>Adminer</td>
+      <td>4.3</td>
+      <td><code class="highlighter-rouge">adminer</code></td>
+      <td><a href="https://hub.docker.com/r/wodby/adminer">wodby/adminer</a></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>phpMyAdmin</td>
+      <td>latest</td>
+      <td><code class="highlighter-rouge">pma</code></td>
+      <td><a href="https://hub.docker.com/r/phpmyadmin/phpmyadmin">phpmyadmin/phpmyadmin</a></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Node</td>
+      <td>latest</td>
+      <td><code class="highlighter-rouge">node</code></td>
+      <td><a href="https://hub.docker.com/_/node">_/node</a></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Portainer</td>
+      <td>latest</td>
+      <td><code class="highlighter-rouge">portainer</code></td>
+      <td><a href="https://hub.docker.com/portainer/portainer">portainer/portainer</a></td>
+      <td>✓</td>
+    </tr>
+    <tr>
+      <td>Traefik</td>
+      <td>latest</td>
+      <td><code class="highlighter-rouge">traefik</code></td>
+      <td><a href="https://hub.docker.com/_/traefik">_/traefik</a></td>
+      <td>✓</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Supported Drupal versions: 8 / 7 / 6</p>
+
+<h2 id="documentation">Documentation</h2>
+
+<p>Full documentation is available at https://wodby.com/stacks/drupal/docs/local.</p>
+
+<h2 id="deployment">Deployment</h2>
+
+<p>Deploy consistent docker-based Drupal stack with orchestrations to your own server via <a href="https://cloud.wodby.com/stackhub/ada51e9b-2204-45ee-8e49-a4151912a168/detail"><img src="https://www.google.com/s2/favicons?domain=wodby.com" alt="Wodby" /> Wodby</a>.</p>
+
+<h2 id="license">License</h2>
+
+<p>This project is licensed under the MIT open source license.</p>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="http://github.com/SummittDweller/sites/edit/gh-pages/README.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="/assets/javascript/anchor-js/anchor.min.js"></script>
+    <script>anchors.add();</script>
+  </body>
+</html>

@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.4.0 -->
+<title>Docker4Drupal Getting Started | sites</title>
+<meta name="generator" content="Jekyll v3.6.2" />
+<meta property="og:title" content="Docker4Drupal Getting Started" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Dockerized development copy of my Drupal web sites" />
+<meta property="og:description" content="Dockerized development copy of my Drupal web sites" />
+<link rel="canonical" href="http://0.0.0.0:4000/docs/" />
+<meta property="og:url" content="http://0.0.0.0:4000/docs/" />
+<meta property="og:site_name" content="sites" />
+<script type="application/ld+json">
+{"url":"http://0.0.0.0:4000/docs/","description":"Dockerized development copy of my Drupal web sites","@type":"WebPage","headline":"Docker4Drupal Getting Started","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link href="/assets/css/style.css?v=fa1482e904e6aee91d583438d0d275ae35b31f85" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+        <h1><a href="http://0.0.0.0:4000/">sites</a></h1>
+      
+
+      <h1 id="docker4drupal-getting-started">Docker4Drupal Getting Started</h1>
+
+<p>Docker4Drupal is a set of docker containers optimized for Drupal. Use docker-compose.yml file from <a href="https://github.com/wodby/docker4drupal">docker4drupal repository</a> to spin up local environment on Linux, Mac OS X and Windows.</p>
+
+<p>Docker4Drupal is designed to be used for local development, if you’re looking for a production solution see <a href="/docs/production.html">using in production</a>.</p>
+
+<h2 id="overview">Overview</h2>
+
+<p>The Drupal stack consist of the following containers:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Container</th>
+      <th>Versions</th>
+      <th>Service name</th>
+      <th>Image</th>
+      <th>Enabled by default</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="/docs/containers/nginx.html">Nginx</a></td>
+      <td>1.13, 1.12</td>
+      <td><code class="highlighter-rouge">nginx</code></td>
+      <td><a href="https://github.com/wodby/drupal-nginx">wodby/drupal-nginx</a></td>
+      <td>✓</td>
+    </tr>
+    <tr>
+      <td><a href="/docs/containers/apache.html">Apache</a></td>
+      <td>2.4</td>
+      <td><code class="highlighter-rouge">apache</code></td>
+      <td><a href="https://github.com/wodby/php-apache">wodby/php-apache</a></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Drupal</td>
+      <td>8, 7, 6</td>
+      <td><code class="highlighter-rouge">php</code></td>
+      <td><a href="https://github.com/wodby/drupal">wodby/drupal</a></td>
+      <td>✓</td>
+    </tr>
+    <tr>
+      <td><a href="/docs/containers/php.html">PHP</a></td>
+      <td>7.1, 7.0, 5.6, 5.3</td>
+      <td><code class="highlighter-rouge">php</code></td>
+      <td><a href="https://github.com/wodby/drupal-php">wodby/drupal-php</a></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><a href="/docs/containers/mariadb.html">MariaDB</a></td>
+      <td>10.2, 10.1</td>
+      <td><code class="highlighter-rouge">mariadb</code></td>
+      <td><a href="https://github.com/wodby/mariadb">wodby/mariadb</a></td>
+      <td>✓</td>
+    </tr>
+    <tr>
+      <td><a href="/docs/containers/postgres.html">PostgreSQL</a></td>
+      <td>10.1, 9.6</td>
+      <td><code class="highlighter-rouge">postgres</code></td>
+      <td><a href="https://github.com/wodby/postgres">wodby/postgres</a></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><a href="/docs/containers/redis.html">Redis</a></td>
+      <td>4.0, 3.2</td>
+      <td><code class="highlighter-rouge">redis</code></td>
+      <td><a href="https://github.com/wodby/redis">wodby/redis</a></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><a href="/docs/containers/varnish.html">Varnish</a></td>
+      <td>4.1</td>
+      <td><code class="highlighter-rouge">varnish</code></td>
+      <td><a href="https://github.com/wodby/drupal-varnish">wodby/drupal-varnish</a></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><a href="/docs/containers/solr.html">Solr</a></td>
+      <td>7.x, 6.x, 5.5, 5.4</td>
+      <td><code class="highlighter-rouge">solr</code></td>
+      <td><a href="https://github.com/wodby/drupal-solr">wodby/drupal-solr</a></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><a href="/docs/containers/nodejs.html">Node.js</a></td>
+      <td>1.0</td>
+      <td><code class="highlighter-rouge">nodejs</code></td>
+      <td><a href="https://github.com/wodby/drupal-node">wodby/drupal-node</a></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><a href="/docs/containers/memcached.html">Memcached</a></td>
+      <td>1.4</td>
+      <td><code class="highlighter-rouge">memcached</code></td>
+      <td><a href="https://github.com/wodby/memcached">wodby/memcached</a></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><a href="/docs/containers/webgrind.html">Webgrind</a></td>
+      <td>1.5</td>
+      <td><code class="highlighter-rouge">webgrind</code></td>
+      <td><a href="https://hub.docker.com/r/wodby/webgrind">wodby/webgrind</a></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><a href="/docs/containers/blackfire.html">Blackfire</a></td>
+      <td>latest</td>
+      <td><code class="highlighter-rouge">blackfire</code></td>
+      <td><a href="https://hub.docker.com/r/blackfire/blackfire">blackfire/blackfire</a></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><a href="/docs/containers/rsyslog.html">Rsyslog</a></td>
+      <td>latest</td>
+      <td><code class="highlighter-rouge">rsyslog</code></td>
+      <td><a href="https://hub.docker.com/r/wodby/rsyslog">wodby/rsyslog</a></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><a href="/docs/containers/athenapdf.html">AthenaPDF</a></td>
+      <td>2.10.0</td>
+      <td><code class="highlighter-rouge">athenapdf</code></td>
+      <td><a href="https://hub.docker.com/r/arachnysdocker/athenapdf-service">arachnysdocker/athenapdf-service</a></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Mailhog</td>
+      <td>latest</td>
+      <td><code class="highlighter-rouge">mailhog</code></td>
+      <td><a href="https://hub.docker.com/r/mailhog/mailhog">mailhog/mailhog</a></td>
+      <td>✓</td>
+    </tr>
+    <tr>
+      <td>Adminer</td>
+      <td>4.3</td>
+      <td><code class="highlighter-rouge">adminer</code></td>
+      <td><a href="https://hub.docker.com/r/wodby/adminer">wodby/adminer</a></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>phpMyAdmin</td>
+      <td>latest</td>
+      <td><code class="highlighter-rouge">pma</code></td>
+      <td><a href="https://hub.docker.com/r/phpmyadmin/phpmyadmin">phpmyadmin/phpmyadmin</a></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Node</td>
+      <td>latest</td>
+      <td><code class="highlighter-rouge">node</code></td>
+      <td><a href="https://hub.docker.com/_/node">_/node</a></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Portainer</td>
+      <td>latest</td>
+      <td><code class="highlighter-rouge">portainer</code></td>
+      <td><a href="https://hub.docker.com/portainer/portainer">portainer/portainer</a></td>
+      <td>✓</td>
+    </tr>
+    <tr>
+      <td>Traefik</td>
+      <td>latest</td>
+      <td><code class="highlighter-rouge">traefik</code></td>
+      <td><a href="https://hub.docker.com/_/traefik">_/traefik</a></td>
+      <td>✓</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Supported Drupal versions: 8 / 7 / 6</p>
+
+<h2 id="requirements">Requirements</h2>
+
+<ul>
+  <li>Install Docker (<a href="https://docs.docker.com/engine/installation">Linux</a>, <a href="https://docs.docker.com/engine/installation/mac">Docker for Mac</a> or <a href="https://docs.docker.com/engine/installation/windows">Docker for Windows (10+ Pro)</a>)</li>
+  <li>For Linux additionally install <a href="https://docs.docker.com/compose/install">docker compose</a></li>
+</ul>
+
+<h2 id="must-know-before-you-start">Must know before you start</h2>
+
+<ol>
+  <li><strong>(!!!) You will lose MariaDB data</strong> if you run <code class="highlighter-rouge">docker-compose down</code>. Instead use <code class="highlighter-rouge">docker-compose stop</code> to stop containers. Alternatively, you can use a manual volume for mariadb data (see compose file), this way your data will always persist</li>
+  <li>To avoid potential problems with permissions between your host and containers please follow <a href="/docs/permissions.html">these instructions</a></li>
+  <li><em>For macOS users</em>: Out of box Docker for Mac volumes has <a href="https://github.com/Wodby/docker4drupal/issues/4">poor performance</a>. However there are workarounds, read more <a href="/docs/macos.html">here</a></li>
+  <li>For better reliability we release images with stability tags (e.g. <code class="highlighter-rouge">wodby/drupal-php:7.1-X.X.X</code>) which correspond to git tags. We strongly recommend using images only with stability tags.</li>
+</ol>
+
+<h2 id="usage">Usage</h2>
+
+<p>There are 2 options how to use docker4drupal – you can either run <a href="https://en.wikipedia.org/wiki/Vanilla_software">vanilla</a> Drupal from the image or mount your own Drupal codebase:</p>
+
+<h3 id="1-run-vanilla-drupal-from-image-default">1. Run Vanilla Drupal from Image (default)</h3>
+
+<ol>
+  <li>Download <code class="highlighter-rouge">docker-compose.yml</code> file from the <a href="https://github.com/wodby/docker4drupal/releases">latest stable release</a></li>
+  <li>Optional: update <em>php</em> and <em>nginx</em> images tags if you want to run Drupal 7 or 6 (by default Drupal 8)</li>
+  <li>Run containers: <code class="highlighter-rouge">docker-compose up -d</code> (it may take some time for them to initialize)</li>
+  <li><a href="/docs/domains.html">Configure domains</a></li>
+  <li>That’s it! Proceed with Drupal installation at <a href="http://drupal.docker.localhost:8000">http://drupal.docker.localhost:8000</a>. Default database user, password and database name are all <code class="highlighter-rouge">drupal</code>, database host is <code class="highlighter-rouge">mariadb</code></li>
+  <li>You can see status of your containers and their logs via portainer: <a href="http://portainer.drupal.docker.localhost:8000">http://portainer.drupal.docker.localhost:8000</a></li>
+</ol>
+
+<h3 id="2-mount-my-drupal-codebase">2. Mount my Drupal Codebase</h3>
+
+<ol>
+  <li>Read <a href="#must-know-before-you-start">must know before you start</a></li>
+  <li>Download <code class="highlighter-rouge">docker-compose.yml</code> file from the <a href="https://github.com/wodby/docker4drupal/releases">latest stable release</a> to your Drupal project root</li>
+  <li>Replace php image from <code class="highlighter-rouge">wodby/drupal</code> (PHP + vanilla Drupal) to <code class="highlighter-rouge">wodby/drupal-php</code> (just PHP)</li>
+  <li>Depending on your Drupal version use appropriate tags for <em>php</em> and <em>nginx</em> images</li>
+  <li>Update <em>nginx</em> and <em>php</em> volumes to <code class="highlighter-rouge">- ./:/var/www/html</code> to mount your codebase</li>
+  <li>Update <code class="highlighter-rouge">NGINX_SERVER_ROOT</code> (or <code class="highlighter-rouge">APACHE_SERVER_ROOT</code>) to <code class="highlighter-rouge">/var/www/html</code> unless your project is based on <a href="https://github.com/drupal-composer/drupal-project">composer template</a></li>
+  <li>Ensure your settings.php uses the same credentials as <em>mariadb</em> service</li>
+  <li>Optional: <a href="/docs/containers/mariadb.html#import-existing-database">import existing database</a></li>
+  <li>Optional: uncomment lines in the compose file to run <em>redis</em>, <em>solr</em>, etc</li>
+  <li><a href="/docs/domains.html">Configure domains</a></li>
+  <li>Run containers: <code class="highlighter-rouge">docker-compose up -d</code></li>
+  <li>That’s it! Your drupal website should be up and running at <a href="http://drupal.docker.localhost:8000">http://drupal.docker.localhost:8000</a>. If you need to run multiple projects simultaneously see <a href="/docs/multiple-projects.html">this article</a></li>
+  <li>You can see status of your containers and their logs via portainer: <a href="http://portainer.drupal.docker.localhost:8000">http://portainer.drupal.docker.localhost:8000</a></li>
+</ol>
+
+<p>You can stop containers by executing:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker-compose stop
+</code></pre></div></div>
+
+<p>Feel free to adjust volumes and ports in the compose file for your convenience. Also, read <a href="/docs/access.html">how to access containers</a> and <a href="/docs/logs.html">how to get logs</a></p>
+
+<h2 id="status">Status</h2>
+
+<p>We’re actively working on these instructions and containers. More options will be added soon. If you have a feature request or found a bug please <a href="https://github.com/wodby/docker4drupal/issues/new">submit an issue on GitHub</a> or <a href="https://slack.wodby.com/"><img src="https://www.google.com/s2/favicons?domain=www.slack.com" alt="Wodby Slack" /> join us on Slack</a></p>
+
+<p>We update containers from time to time by releasing new images (stability tags change).</p>
+
+<h2 id="license">License</h2>
+
+<p>This project is licensed under the MIT open source license.</p>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="http://github.com/SummittDweller/sites/edit/gh-pages/docs/index.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="/assets/javascript/anchor-js/anchor.min.js"></script>
+    <script>anchors.add();</script>
+  </body>
+</html>

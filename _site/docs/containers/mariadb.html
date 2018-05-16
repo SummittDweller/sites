@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.4.0 -->
+<title>MariaDB | sites</title>
+<meta name="generator" content="Jekyll v3.6.2" />
+<meta property="og:title" content="MariaDB" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Dockerized development copy of my Drupal web sites" />
+<meta property="og:description" content="Dockerized development copy of my Drupal web sites" />
+<link rel="canonical" href="http://0.0.0.0:4000/docs/containers/mariadb.html" />
+<meta property="og:url" content="http://0.0.0.0:4000/docs/containers/mariadb.html" />
+<meta property="og:site_name" content="sites" />
+<script type="application/ld+json">
+{"url":"http://0.0.0.0:4000/docs/containers/mariadb.html","description":"Dockerized development copy of my Drupal web sites","@type":"WebPage","headline":"MariaDB","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link href="/assets/css/style.css?v=fa1482e904e6aee91d583438d0d275ae35b31f85" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+        <h1><a href="http://0.0.0.0:4000/">sites</a></h1>
+      
+
+      <h1 id="mariadb">MariaDB</h1>
+
+<p>MariaDB uses a persistent volume defined in Dockerfile.</p>
+
+<h2 id="data-persistence">Data persistence</h2>
+
+<p>Do not use <code class="highlighter-rouge">docker-compose down</code> command because it will purge MariaDB volume. Instead use <code class="highlighter-rouge">docker-compose stop</code>. If you restart Docker you WILL NOT lose your MariaDB data.</p>
+
+<p>Alternatively, you can manage your volumes manually by uncommenting the volume definition for <code class="highlighter-rouge">/var/lib/mysql</code>. Replace <code class="highlighter-rouge">/path/to/mariadb/data/on/host</code> to the preferred filepath on your host machine. This way, your db data will always persist.</p>
+
+<h2 id="import-existing-database">Import existing database</h2>
+
+<p>if you want to import your database, uncomment the following line in the compose file:</p>
+<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#      - ./mariadb-init:/docker-entrypoint-initdb.d # Place init .sql .sql.gz .sh file(s) here</span>
+</code></pre></div></div>
+
+<p>Create the volume directory <code class="highlighter-rouge">./mariadb-init</code> in the same directory as the compose file and put there your SQL file(s). All SQL files will be automatically imported once MariaDB container has started.</p>
+
+<h2 id="export">Export</h2>
+
+<p>Exporting all databases:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker-compose <span class="nb">exec </span>mariadb sh <span class="nt">-c</span> <span class="s1">'exec mysqldump --all-databases -uroot -p"root-password"'</span> <span class="o">&gt;</span> databases.sql
+</code></pre></div></div>
+
+<p>Exporting a specific database:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker-compose <span class="nb">exec </span>mariadb sh <span class="nt">-c</span> <span class="s1">'exec mysqldump -uroot -p"root-password" my-db'</span> <span class="o">&gt;</span> my-db.sql
+</code></pre></div></div>
+
+<h2 id="configuration">Configuration</h2>
+
+<p>Configuration is possible via environment variables. See the full list of variables on <a href="https://github.com/wodby/mariadb">GitHub</a>.</p>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="http://github.com/SummittDweller/sites/edit/gh-pages/docs/containers/mariadb.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="/assets/javascript/anchor-js/anchor.min.js"></script>
+    <script>anchors.add();</script>
+  </body>
+</html>

@@ -150,9 +150,7 @@ services:
     ports:
       - 4000:4000
     volumes:
-      - ./dsanson.github.com:/srv/jekyll     # https://github.com/dsanson/dsanson.github.com
-      # - ./Sample-Jekyll-Site:/srv/jekyll   # https://github.com/maciakl/Sample-Jekyll-Site
-      # - ./jekyll-example:/srv/jekyll       # https://github.com/mdo/jekyll-example
+      - ./Sample-Jekyll-Site:/srv/jekyll
     labels:
       - 'traefik.backend=jekyll_1'
       - 'traefik.port=4000'
